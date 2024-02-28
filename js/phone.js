@@ -22,7 +22,7 @@ const desplayPhones = (phones, isShowAll) => {
     phones = phones.slice(0, 12);
   }
   phones.forEach((phone) => {
-    // console.log(phone);
+    console.log(phone);
     // 2: create a div
     const phoneCard = document.createElement("div");
     phoneCard.classList = `card bg-gray-100 p-4 shadow-xl border-2 hover:border-2 hover:border-sky-600`;
@@ -32,16 +32,21 @@ const desplayPhones = (phones, isShowAll) => {
         <div class="card-body">
           <h2 class="card-title">${phone.phone_name}</h2>
           <p>If a dog chews shoes whose shoes does he choose?</p>
-          <div class="card-actions justify-end">
-            <button class="btn btn-primary">Buy Now</button>
+          <div class="card-actions justify-center">
+            <button onclick="handleShowDetail('${phone.slug}')" class="btn btn-primary">Show Details</button>
           </div>
         </div>
         `;
+      //4: append child 
     phoneContainer.appendChild(phoneCard);
   });
   // hide loading spnier
   toggleLoadingSpiner(false);
 };
+// 
+const handleShowDetail = (id) =>{
+  console.log('ksk');
+}
 
 // handele search button
 const handeleSearch = (isShowAll) => {
