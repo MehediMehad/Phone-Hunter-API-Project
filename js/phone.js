@@ -1,23 +1,26 @@
-const loadPhone = async (searchPhone) => {
-  const res = await fetch(`https://openapi.programming-hero.com/api/phones?search=${searchPhone}`);
+const loadPhone = async (searchPhone, isShowAll) => {
+  const res = await fetch(
+    `https://openapi.programming-hero.com/api/phones?search=${searchPhone}`
+  );
   const data = await res.json();
   const phones = data.data;
-  desplayPhones(phones);
+  desplayPhones(phones, isShowAll);
 };
-const desplayPhones = (phones) => {
+const desplayPhones = (phones, isShowAll) => {
   const phoneContainer = document.getElementById("phone-container");
   // clear phone container cards befor adding new card
-  phoneContainer.textContent= ''
+  phoneContainer.textContent = "";
   // display show all button if there are more than 12 phones
-  const showAllContainer = document.getElementById('showAllContainer')
-  if (phones.length > 12) {
-    showAllContainer.classList.remove('hidden')
-  }
-  else{
-    showAllContainer.classList.add('hidden')
+  const showAllContainer = document.getElementById("showAllContainer");
+  if (phones.length > 12 && !isShowAll) {
+    showAllContainer.classList.remove("hidden");
+  } else {
+    showAllContainer.classList.add("hidden");
   }
   // display only first 12 phones
-  phones = phones.slice(0, 12);
+  if (!isShowAll) {
+    phones = phones.slice(0, 12);
+  }
   phones.forEach((phone) => {
     // console.log(phone);
     // 2: create a div
@@ -37,23 +40,27 @@ const desplayPhones = (phones) => {
     phoneContainer.appendChild(phoneCard);
   });
   // hide loading spnier
-  toggleLoadingSpiner(false)
+  toggleLoadingSpiner(false);
 };
+
 // handele search button
-const handeleSearch = () =>{
-  toggleLoadingSpiner(true)
-  const searchField = document.getElementById('searchField')
+const handeleSearch = (isShowAll) => {
+  toggleLoadingSpiner(true);
+  const searchField = document.getElementById("searchField");
   const searchText = searchField.value;
   console.log(searchText);
-  loadPhone(searchText)
-}
+  loadPhone(searchText, isShowAll);
+};
 
-const toggleLoadingSpiner = (isLoading) =>{
-   const loadingSpiner = document.getElementById('loadingSpiner')
+const toggleLoadingSpiner = (isLoading) => {
+  const loadingSpiner = document.getElementById("loadingSpiner");
   if (isLoading) {
-  loadingSpiner.classList.remove('hidden')
-}
-else{
-    loadingSpiner.classList.add('hidden')
+    loadingSpiner.classList.remove("hidden");
+  } else {
+    loadingSpiner.classList.add("hidden");
   }
-  }
+};
+// handle show all
+const handleShowAll = () => {
+  handeleSearch(true)
+};
