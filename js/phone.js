@@ -36,11 +36,24 @@ const desplayPhones = (phones) => {
         `;
     phoneContainer.appendChild(phoneCard);
   });
+  // hide loading spnier
+  toggleLoadingSpiner(false)
 };
 // handele search button
 const handeleSearch = () =>{
+  toggleLoadingSpiner(true)
   const searchField = document.getElementById('searchField')
   const searchText = searchField.value;
   console.log(searchText);
   loadPhone(searchText)
 }
+
+const toggleLoadingSpiner = (isLoading) =>{
+   const loadingSpiner = document.getElementById('loadingSpiner')
+  if (isLoading) {
+  loadingSpiner.classList.remove('hidden')
+}
+else{
+    loadingSpiner.classList.add('hidden')
+  }
+  }
